@@ -1,24 +1,17 @@
-import { Injectable, OnModuleInit } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 // import { Sql } from "postgres";
 const postgres = require('postgres');
 
 
 @Injectable()
-export class SupabaseService implements OnModuleInit {
-  private sql; 
+export class SupabaseService {
+  public client: SupabaseClient;
 
-  onModuleInit() {
-    this.sql = postgres(process.env.DATABASE_URL!, {
-      ssl: 'require',
-      max: 10,
-    });
-  }
-
-  get client() {
-    return this.sql;
-  }
-
-  async query (strings: TemplateStringsArray, ...params: any[])  {
-    return this.sql(strings, ...params);
+  constructor() {
+    this.client = createClient(
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
   }
 }

@@ -1,7 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
-// import { Sql } from "postgres";
-const postgres = require('postgres');
 
 
 @Injectable()

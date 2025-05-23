@@ -101,6 +101,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
             localStorage.setItem('token', JSON.stringify(token));
             setUser(user);
+            console.log(user);
         
             // // Mock user creation - in a real app, this would be done by Supabase
             // const mockUser: User = {

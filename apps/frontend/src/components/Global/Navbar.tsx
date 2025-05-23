@@ -13,7 +13,7 @@ export default function Navbar() {
                 </button>
             </Link>
 
-            <Link href="/register">
+            <Link href="/register" className='hidden sm:block'>
                 <button className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50">
                     Create Account
                 </button>

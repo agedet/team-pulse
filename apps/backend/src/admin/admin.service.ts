@@ -8,9 +8,11 @@ export class AdminService {
     constructor(private readonly supabase: SupabaseService) {}
 
     async createTeam(createTeamDto: CreateTeamDto) {
+        const { teamName, teamId} = createTeamDto;
+
         const { data, error } = await this.supabase.client
             .from('teams')
-            .insert([{ name: createTeamDto.name }])
+            .insert([{ teamName, teamId }])
             .select();
 
         if (error) throw new Error(error.message);
@@ -18,12 +20,14 @@ export class AdminService {
     }
 
     async inviteUser(inviteUserDto: InviteUserDto) {
+        const { email, teamId, teamRole } = inviteUserDto;
+
         const { data, error } = await this.supabase.client
             .from('invitations')
             .insert([{ 
-                email: inviteUserDto.email, 
-                team_id: inviteUserDto.teamId, 
-                role: inviteUserDto.role 
+                email, 
+                teamId, 
+                teamRole, 
             }])
             .select();
 

@@ -1,6 +1,6 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { Roles } from 'src/auth/roles.decorator';
+import { TeamRoles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { AdminService } from './admin.service';
 import { CreateTeamDto } from 'src/team/dto/create-team.dto';
@@ -8,7 +8,7 @@ import { InviteUserDto } from 'src/user/dto/invite-user.dto';
 
 @Controller('admin')
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles('admin')
+@TeamRoles('admin')
 export class AdminController {
     constructor(private readonly adminService: AdminService) {}
 

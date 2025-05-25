@@ -5,9 +5,14 @@ import { AdminModule } from './admin/admin.module';
 import { TeamsModule } from './team/team.module';
 import { SupabaseModule } from './supabase/supabase.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UserModule, AdminModule, TeamsModule, SupabaseModule, AuthModule],
+  imports: [
+    ConfigModule.forRoot({ 
+      isGlobal: true 
+    }), 
+    UserModule, AdminModule, TeamsModule, SupabaseModule, AuthModule],
   controllers: [UserController],
   providers: [],
 })

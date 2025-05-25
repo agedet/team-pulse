@@ -1,20 +1,18 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateTeamDto } from './dto/create-team.dto';
-import { createClient } from '@supabase/supabase-js';
+import { SupabaseService } from 'src/supabase/supabase.service';
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
 
 @Injectable()
 export class TeamsService {
-    async createTeam(dto: CreateTeamDto) {
-        const { name } = dto;
+    constructor(private readonly supabase: SupabaseService) {}
 
-        const { data, error } = await supabase
+    async createTeam(createTeamDto: CreateTeamDto) {
+        const { teamName, teamId } = createTeamDto;
+
+        const { data, error } = await this.supabase.client
         .from('teams')
-        .insert([{ name }])
+        .insert([{ teamName, teamId }])
         .select();
 
         if (error) {

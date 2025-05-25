@@ -1,21 +1,18 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InviteUserDto } from './dto/invite-user.dto';
+import { SupabaseService } from 'src/supabase/supabase.service';
 
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
 
 @Injectable()
 export class UserService {
-    async inviteUser(dto: InviteUserDto) {
-        const {email, role, teamId} = dto;
+    constructor(private readonly supabase: SupabaseService) {}
 
-        const { data, error } = await supabase.auth.admin.createUser({
+    async inviteUser(dto: InviteUserDto) {
+        const {email, teamRole, teamId} = dto;
+
+        const { data, error } = await this.supabase.client.auth.admin.createUser({
             email,
-            user_metadata: { role, teamId},
+            user_metadata: { teamRole, teamId },
             email_confirm: true
         });
 

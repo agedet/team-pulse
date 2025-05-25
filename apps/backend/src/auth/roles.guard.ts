@@ -11,15 +11,15 @@ export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const roles = this.reflector.get<string[]>('roles', context.getHandler());
-    if (!roles) return true;
+    const teamRoles = this.reflector.get<string[]>('teamRoles', context.getHandler());
+    if (!teamRoles) return true;
 
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-    if (roles.includes(user.role)) {
+    if (teamRoles.includes(user.teamRole)) {
       return true;
     }
 
-    throw new ForbiddenException('You do not have permission (roles)');
+    throw new ForbiddenException('You do not have permission (teamRoles)');
   }
 }

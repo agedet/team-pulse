@@ -3,7 +3,7 @@ import { TeamsService } from './team.service';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateTeamDto } from './dto/create-team.dto';
-import { Roles } from 'src/auth/roles.decorator';
+import { TeamRoles } from 'src/auth/roles.decorator';
 
 @Controller('teams')
 export class TeamsController {
@@ -11,7 +11,7 @@ export class TeamsController {
 
     @Post()
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles('admin')
+    @TeamRoles('admin')
     async create(@Body() createTeamDto: CreateTeamDto) {
         return await this.teamsService.createTeam(createTeamDto);
     }

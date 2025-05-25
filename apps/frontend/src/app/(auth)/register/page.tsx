@@ -122,8 +122,8 @@ function RegisterPage() {
           <CardFooter className='flex flex-col space-y-4 mt-8'>
             <Button 
               type='submit'
-              className='w-full '
-              disabled={isSubmitting}
+              className='w-full disabled:bg-blue-400'
+              disabled={isSubmitting || !email || !fullName || !password || !confirmPassword}
             >
               {isSubmitting ? "Creating Account..." : "Create Account"}
             </Button>

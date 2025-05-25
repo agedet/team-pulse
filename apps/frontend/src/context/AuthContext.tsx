@@ -3,13 +3,14 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { toast } from "sonner";
 import axios from 'axios'
+import { useRouter } from "next/navigation";
 
 interface User {
   id: string; 
   fullName?: string;
   email: string;
   password: string;
-  role: "admin" | "member";
+  teamRole: "admin" | "member";
   teamId?: string;
 }
 
@@ -20,7 +21,6 @@ interface AuthContextType {
   register: (fullName: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 }
-
 
 export const AuthContext = createContext<AuthContextType> ({
     user: null,
@@ -33,6 +33,7 @@ export const AuthContext = createContext<AuthContextType> ({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
 
     const API_URL = process.env.BASE_URL || 'http://localhost:5000';
 
@@ -60,8 +61,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             const res = await axios.post(`${API_URL}/auth/login`, { email, password});
             const { token, user } = res.data;
 
-            localStorage.setItem('token', JSON.stringify(token));
+            localStorage.setItem('token', token);
             setUser(user);
+            
+            console.log(JSON.stringify(token));
+            
+            console.log(JSON.stringify(user));
 
             // const isAdmin = email.includes("admin");
             // const mockUser: User = {
@@ -94,29 +99,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 email,
                 password,
                 fullName,
-                role: 'member',
             });
 
             const { token, user } = res.data;
 
-            localStorage.setItem('token', JSON.stringify(token));
+            localStorage.setItem('token', token);
             setUser(user);
-            console.log(user);
-        
-            // // Mock user creation - in a real app, this would be done by Supabase
-            // const mockUser: User = {
-            //     id: Math.random().toString(36).substring(7),
-            //     fullName,
-            //     role: "member",  // New users are members by default
-            //     email: email.split("@")[0],
-            //     password,
-            // };
-        
-            // localStorage.setItem("teamPulseUser", JSON.stringify(mockUser));
-            // setUser(mockUser);
-            toast.success("Registration successful");
+            console.log(JSON.stringify(token));
             
-            // return mockUser;
+            console.log(JSON.stringify(user));
+        
+            toast.success("Registration successful");
         } catch (error) {
             console.error("Registration error:", error);
             toast.error("Registration failed. Please try again.");
@@ -130,9 +123,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             setIsLoading(true);
         
-            // Clear local storage
             localStorage.removeItem("token");
             setUser(null);
+            router.push("/login");
             toast.success("Logged out successfully");
         } catch (error) {
             console.error("Logout error:", error);

@@ -10,7 +10,7 @@ export class InviteUserDto {
   email: string;
 
   @IsEnum(UserRole)
-  role: UserRole;
+  teamRole: UserRole;
 
   @IsString()
   teamId: string;

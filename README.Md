@@ -2,6 +2,11 @@
 
 TeamPulse is a lightweight internal web app designed to help companies manage team status updates and availability in real time. Built with a modern stack — Next.js + Tailwind CSS on the frontend and NestJS + Supabase on the backend — it allows Admins to create teams, invite users, and view team-wide status updates.
 
+## Live Link
+
+### `https://team-pulse-zeta.vercel.app`
+
+
 ## Tech Stack
 
 * **Frontend**: Next.js, Tailwind CSS, Sonner (for toasts)
@@ -45,7 +50,7 @@ team-pulse/
 
    ```env
    SUPABASE_URL=your_supabase_url
-   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+   SUPABASE_SERVICE_ROLE_KEY=your_service_anon_key
    FRONTEND_URL=http://localhost:3000
    ```
 

@@ -17,16 +17,27 @@ export function CreateTeamForm() {
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      setLoading(true)
+    if (!teamName) {
+      setError('Team name is required.');
+      return;
+    }
+    
+    setLoading(true);
+    setError('');
 
+    try {
       await axios.post(`${API_URL}/admin/create-team`, { teamName });
       toast.success("Team created successfully");
-      setTeamName("");
-    } catch (error) {
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Failed to create team. Please try again');
+      }
+      
       toast.error("Failed to create team");
+    } finally {
       setLoading(false);
-      setError("Failed to create team");
     }
   };
 

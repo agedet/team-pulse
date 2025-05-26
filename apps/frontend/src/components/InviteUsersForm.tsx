@@ -17,22 +17,29 @@ export function InviteUserForm() {
     const API_URL = process.env.BASE_URL || 'http://localhost:5000';
   
     const handleInvite = async (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
+        
+        setLoading(true);
+        setError('');
 
         try {
-            setLoading(true);
-            
             await axios.post(`${API_URL}/admin/invite`, {
                 email,
                 teamRole,
             });
 
             toast.success("User invited successfully");
-            setEmail("");
-        } catch (error) {
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('Failed to invite user. Please try again');
+            }
+
             toast.error("Failed to invite user");
-            setError('Failed to invite user. Please try again');
-            setLoading(false)
+            
+        } finally {
+            setLoading(false);
         }
     };
 

@@ -5,31 +5,38 @@
    ▲ Next.js 15.3.2
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 7.0s
+ ✓ Compiled successfully in 4.0s
    Linting and checking validity of types ...
-
-Failed to compile.
-
-./src/components/CreateTeamForm.tsx
-26:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
-
-./src/components/InviteUsersForm.tsx
-32:18  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
-
-./src/components/StatustForm.tsx
-27:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
-
-./src/components/TeamMemberstable.tsx
-28:6  Warning: React Hook useEffect has a missing dependency: 'API_URL'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
 
 ./src/context/AuthContext.tsx
 58:8  Warning: React Hook useEffect has a missing dependency: 'logout'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
 
 info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
-npm error Lifecycle script `build` failed with error:
-npm error code 1
-npm error path C:\Users\CELESTINA\Downloads\enbros projects\teampulse-app\apps\frontend
-npm error workspace frontend@0.1.0
-npm error location C:\Users\CELESTINA\Downloads\enbros projects\teampulse-app\apps\frontend
-npm error command failed
-npm error command C:\WINDOWS\system32\cmd.exe /d /s /c next build
+   Collecting page data ...
+   Generating static pages (0/13) ...
+   Generating static pages (3/13) 
+   Generating static pages (6/13) 
+   Generating static pages (9/13) 
+ ✓ Generating static pages (13/13)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    1.44 kB         115 kB
+├ ○ /_not-found                            975 B         102 kB
+├ ○ /dashboard                           3.85 kB         168 kB
+├ ○ /dashboard/admin                     4.22 kB         168 kB
+├ ○ /dashboard/team                      1.38 kB         132 kB
+├ ○ /login                               3.63 kB         147 kB
+├ ○ /not-found                             576 B         102 kB
+├ ○ /register                            3.84 kB         147 kB
+├ ○ /unauthorized                          573 B         102 kB
+└ ○ /verify                              3.62 kB         143 kB
++ First Load JS shared by all             101 kB
+  ├ chunks/315-3811f6597dfb111a.js       46.3 kB
+  ├ chunks/87c73c54-31ede4a62a8c2d04.js  53.2 kB
+  └ other shared chunks (total)          1.99 kB
+
+
+○  (Static)  prerendered as static content
+

@@ -34,6 +34,4 @@ export class AdminService {
         if (error) throw new Error(error.message);
         return data;
     }
-
-
 }

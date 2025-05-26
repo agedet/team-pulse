@@ -1,11 +1,17 @@
 'use client';
 
+import { CreateTeamForm } from '@/components/CreateTeamForm';
+import { InviteUserForm } from '@/components/InviteUsersForm';
+import Spinner from '@/components/Spinner';
+import { TeamMembersTable } from '@/components/TeamMemberstable';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 
 export default function AdminPage() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
+
+  if (isLoading) return <Spinner />
 
   if (!user || user.teamRole !== 'admin') {
     router.push('/unauthorized');
@@ -16,16 +22,14 @@ export default function AdminPage() {
     <div>
       <div className="bg-white shadow p-4 rounded space-y-4">
         <div>
-          <h3 className="text-lg font-medium">Create Team</h3>
-          <p>Form to create a team goes here.</p>
+          <CreateTeamForm />
+        </div>
+
+        <div>
+          <InviteUserForm />
         </div>
         <div>
-          <h3 className="text-lg font-medium">Invite Members</h3>
-          <p>Form to invite members by email and assign roles.</p>
-        </div>
-        <div>
-          <h3 className="text-lg font-medium">Team Members</h3>
-          <p>List of team members and statuses.</p>
+          <TeamMembersTable />
         </div>
       </div>
     </div>

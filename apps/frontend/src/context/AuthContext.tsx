@@ -1,9 +1,9 @@
 'use client'
 
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import axios from 'axios'
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface User {
   id: string; 
@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Check for existing session on mount
     useEffect(() => {
         const token = localStorage.getItem('token');
+
         if (!token) {
             setIsLoading(false);
             return;
@@ -77,8 +78,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             } else {
                 router.push('/unauthorized');
             }
-            
-            console.log(JSON.stringify(user));
 
             toast.success("Login successful");
         } catch (error) {
@@ -132,10 +131,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             } else {
                 router.push('/unauthorized')
             } 
-
-            console.log(JSON.stringify(token));
-            
-            console.log(JSON.stringify(user));
         
             toast.success("Verification successful");
         } catch (error) {
@@ -147,22 +142,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-    const logout = async () => {
+    const logout = useCallback( async () => {
         try {
             setIsLoading(true);
         
             localStorage.removeItem("token");
             setUser(null);
+
             router.push("/login");
+
             toast.success("Logged out successfully");
         } catch (error) {
             console.error("Logout error:", error);
             toast.error("Logout failed");
-            throw error;
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [router]);
 
     return (
         <AuthContext.Provider value={{ user, isLoading, login, register, verify, logout}}>

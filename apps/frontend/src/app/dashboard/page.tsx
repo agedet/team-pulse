@@ -1,12 +1,15 @@
 'use client';
 
+import Spinner from '@/components/Spinner';
 import StatusForm from '@/components/StatustForm';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
+
+  if (isLoading) return <Spinner />
 
   if (!user) {
     router.push('/unauthorized');
@@ -16,16 +19,11 @@ export default function DashboardPage() {
   return (
     <main>
       <div className='flex flex-col gap-4 items-start justify-between md:flex-row md:items-center'>
-        <div className='flex flex-col'>
+        <div>
           <h2 className="text-xl font-semibold">
             Hello, {' '} 
             {user.fullName || user.email}
           </h2>
-
-          {/* <p>
-            Your current role is: 
-            <strong>{user.teamRole}</strong>
-          </p> */}
         </div>
 
         <StatusForm />

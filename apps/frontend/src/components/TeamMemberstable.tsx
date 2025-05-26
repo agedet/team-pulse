@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -38,8 +39,8 @@ export function TeamMembersTable({ teamId }: { teamId: string }) {
           </tr>
         </thead>
         <tbody>
-          {members.map((m) => (
-            <tr key={m.id}>
+          {members.map((m, index) => (
+            <tr key={index}>
               <td className="border p-2">{m.email}</td>
               <td className="border p-2">{m.teamRole}</td>
               <td className="border p-2">{m.statuses?.[0]?.status || '-'}</td>

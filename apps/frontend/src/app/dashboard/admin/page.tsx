@@ -3,7 +3,7 @@
 import { CreateTeamForm } from '@/components/CreateTeamForm';
 import { InviteUserForm } from '@/components/InviteUsersForm';
 import Spinner from '@/components/Spinner';
-import { TeamMembersTable } from '@/components/TeamMemberstable';
+// import { TeamMembersTable } from '@/components/TeamMemberstable';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 
@@ -28,9 +28,9 @@ export default function AdminPage() {
         <div>
           <InviteUserForm />
         </div>
-        <div>
+        {/* <div>
           <TeamMembersTable />
-        </div>
+        </div> */}
       </div>
     </div>
   );

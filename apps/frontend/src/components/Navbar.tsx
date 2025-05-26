@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function Navbar() {
   return (
@@ -10,15 +11,15 @@ export default function Navbar() {
        
       <div className="space-x-4">
         <Link href="/login">
-          <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+          <Button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
             Login
-          </button>
+          </Button>
         </Link>
 
         <Link href="/register" className='hidden sm:inline-flex'>
-          <button className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50">
+          <Button className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50">
             Create Account
-          </button>
+          </Button>
         </Link>
       </div>
     </header>

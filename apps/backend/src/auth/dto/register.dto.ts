@@ -2,7 +2,6 @@ import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
 
 
 export class RegisterUserDto {
-   
 
     @IsNotEmpty()
     fullName: string;
@@ -17,6 +16,6 @@ export class RegisterUserDto {
     // @IsNotEmpty()
     // teamId: string;
 
-    // @IsNotEmpty()
-    // teamRole?: 'admin' | 'member';
+    @IsNotEmpty()
+    teamRole?: 'admin' | 'member';
 }

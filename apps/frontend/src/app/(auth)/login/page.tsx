@@ -16,6 +16,7 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { login, user } = useAuth();
   const router = useRouter();
+  const [error, setError] = useState('');
 
   // Redirect if user is already logged in
   if (user) {
@@ -30,11 +31,16 @@ const Login = () => {
       toast.error("Please enter your email and password");
       return;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email");
+      return false;
+    }
     
     try {
       setIsSubmitting(true);
       await login(email, password);
-      router.push("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
       // Error is already handled in the auth context with toast
@@ -58,6 +64,11 @@ const Login = () => {
           <CardDescription className="text-center">
             Enter your email and password to sign in
           </CardDescription>
+          {error && 
+            <p className="text-red-500 text-center mb-4">
+              {error}
+            </p>
+          }
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">

@@ -3,12 +3,13 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { toast } from "sonner";
 import axios from 'axios'
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 interface User {
   id: string; 
   fullName?: string;
   email: string;
+  otp: string;
   password: string;
   teamRole: "admin" | "member";
   teamId?: string;
@@ -19,6 +20,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (fullName: string, email: string, password: string) => Promise<void>;
+  verify: (email: string, otp: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -27,6 +29,7 @@ export const AuthContext = createContext<AuthContextType> ({
     isLoading: true,
     login: async () => {},
     register: async () => {},
+    verify: async () => {},
     logout: async () => {},
 });
 
@@ -58,30 +61,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             setIsLoading(true);
         
-            const res = await axios.post(`${API_URL}/auth/login`, { email, password});
+            const res = await axios.post(`${API_URL}/auth/login`, { 
+                email, 
+                password
+            });
             const { token, user } = res.data;
 
             localStorage.setItem('token', token);
             setUser(user);
-            
-            console.log(JSON.stringify(token));
+
+            if (res.data.user.teamRole === 'admin') {
+                router.push('/dashboard/admin');
+            } else if (res.data.user.teamRole === 'member') {
+                router.push('/dashboard');
+            } else {
+                router.push('/unauthorized');
+            }
             
             console.log(JSON.stringify(user));
 
-            // const isAdmin = email.includes("admin");
-            // const mockUser: User = {
-            //     id: Math.random().toString(36).substring(7),
-            //     role: isAdmin ? "admin" : "member",
-            //     email: email.split("@")[0],
-            //     password,
-            // };
-        
-            // localStorage.setItem("teamPulseUser", JSON.stringify(mockUser));
-            // setUser(mockUser);
-
             toast.success("Login successful");
-        
-            // return mockUser;
         } catch (error) {
             console.error("Login error:", error);
             toast.error("Login failed. Please check your credentials.");
@@ -95,24 +94,53 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             setIsLoading(true);
             
-            const res = await axios.post(`${API_URL}/auth/register`, {
+            await axios.post(`${API_URL}/auth/register`, {
                 email,
                 password,
                 fullName,
+                teamRole: 'member'
+            });
+
+            router.push('/verify?email=' + email);
+        } catch (error) {
+            console.error("Registration error:", error);
+            toast.error("Registration failed. Please try again.");
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const verify = async (email: string, otp: string) => {
+        try {
+            setIsLoading(true);
+            
+            const res = await axios.post(`${API_URL}/auth/verify`, {
+                email,
+                otp,
             });
 
             const { token, user } = res.data;
 
             localStorage.setItem('token', token);
             setUser(user);
+
+            if (res.data.user.teamRole === 'admin') {
+                router.push('/dashboard/admin');
+            } else if (res.data.user.teamRole === 'member') {
+                router.push('/dashboard');
+            } else {
+                router.push('/unauthorized')
+            } 
+
             console.log(JSON.stringify(token));
             
             console.log(JSON.stringify(user));
         
-            toast.success("Registration successful");
+            toast.success("Verification successful");
         } catch (error) {
-            console.error("Registration error:", error);
-            toast.error("Registration failed. Please try again.");
+            console.error("Verification error:", error);
+            toast.error("Verification failed. Please try again.");
             throw error;
         } finally {
             setIsLoading(false);
@@ -137,7 +165,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, isLoading, login, register, logout}}>
+        <AuthContext.Provider value={{ user, isLoading, login, register, verify, logout}}>
             {children}
         </AuthContext.Provider>
     )

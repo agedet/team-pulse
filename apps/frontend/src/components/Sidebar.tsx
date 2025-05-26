@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function Sidebar() {
@@ -22,7 +22,7 @@ export default function Sidebar() {
           </Link>
 
           {user?.teamRole === 'admin' && (
-            <Link href="/admin" className="block hover:text-blue-600">
+            <Link href="/dashboard/admin" className="block hover:text-blue-600">
               Admin Panel
             </Link>
           )}

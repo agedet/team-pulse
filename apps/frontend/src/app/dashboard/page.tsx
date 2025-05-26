@@ -2,25 +2,30 @@
 
 import StatusForm from '@/components/StatustForm';
 import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const router = useRouter();
 
-  if (!user) return <p className="text-center mt-20">Loading user...</p>;
+  if (!user) {
+    router.push('/unauthorized');
+    return;
+  }
 
   return (
     <main>
       <div className='flex flex-col gap-4 items-start justify-between md:flex-row md:items-center'>
         <div className='flex flex-col'>
           <h2 className="text-xl font-semibold">
-            Hello, 
+            Hello, {' '} 
             {user.fullName || user.email}
           </h2>
 
-          <p>
+          {/* <p>
             Your current role is: 
             <strong>{user.teamRole}</strong>
-          </p>
+          </p> */}
         </div>
 
         <StatusForm />

@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
 
 function RegisterPage() {
@@ -15,6 +14,7 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
   const { register, user } = useAuth();
   const router = useRouter();
 
@@ -24,26 +24,43 @@ function RegisterPage() {
     return null;
   }
 
+  const validateForm = () => {
+    if (!fullName || !email || !password || !confirmPassword) {
+      setError('All fields are required.');
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address.');
+      return false;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return false;
+    }
+
+    setError('');
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!fullName || !email || !password || !confirmPassword) {
-      toast.error("Please fill in all fields");
-      return;
-    }
-    
-    if (password !== confirmPassword) {
-      toast.error("Passwords don't match");
-      return;
-    }
-    
+    if (!validateForm()) return;
+
     try {
       setIsSubmitting(true);
+      setError('');
       await register(fullName, email, password);
-      router.push("/dashboard");
     } catch (error) {
       console.error("Registration error:", error);
-      // Error is already handled in the auth context with toast
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unexpected error occurred.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -66,6 +83,11 @@ function RegisterPage() {
           <CardDescription className='text-center'>
             Enter your details to create a TeamPulse account.
           </CardDescription>
+          {error && 
+            <p className="text-red-500 text-center mb-4">
+              {error}
+            </p>
+          }
         </CardHeader>
 
         <form onSubmit={handleSubmit}>

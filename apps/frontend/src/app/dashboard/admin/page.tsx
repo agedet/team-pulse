@@ -1,12 +1,16 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 export default function AdminPage() {
   const { user } = useAuth();
+  const router = useRouter();
 
-  if (!user || user.role !== 'admin') 
-    return <p className="text-center mt-20">Access Denied</p>;
+  if (!user || user.teamRole !== 'admin') {
+    router.push('/unauthorized');
+    return
+  }
 
   return (
     <div>

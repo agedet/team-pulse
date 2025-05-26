@@ -5,13 +5,22 @@
    ▲ Next.js 15.3.2
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 3.0s
+ ✓ Compiled successfully in 7.0s
    Linting and checking validity of types ...
 
 Failed to compile.
 
+./src/components/CreateTeamForm.tsx
+26:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/InviteUsersForm.tsx
+32:18  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
 ./src/components/StatustForm.tsx
-24:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+27:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/TeamMemberstable.tsx
+28:6  Warning: React Hook useEffect has a missing dependency: 'API_URL'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
 
 ./src/context/AuthContext.tsx
 58:8  Warning: React Hook useEffect has a missing dependency: 'logout'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps

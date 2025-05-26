@@ -6,10 +6,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen">
       <Sidebar />
       <main className="flex-1 bg-gray-50">
-        <header className="mb-6  p-6 bg-white">
+        <header className="mb-6 p-6 bg-white">
           <h1 className="text-2xl font-bold">Dashboard</h1>
         </header>
-        <section className='p-6'>
+        <section className='p-4'>
           {children}
         </section>
       </main>

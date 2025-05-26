@@ -12,17 +12,17 @@ export default function Sidebar() {
       <div>
         <h2 className="text-xl text-blue-600 font-semibold mb-6">TeamPulse</h2>
 
-        <nav className="flex flex-col gap-4">
-          <Link href="/dashboard" className="block hover:text-blue-600">
+        <nav className="mt-10 flex flex-col gap-4">
+          <Link href="/dashboard" className="font-semibold block hover:text-blue-600">
             Dashboard
           </Link>
 
-          <Link href="/dashboard/team" className="block hover:text-blue-600">
+          <Link href="/dashboard/team" className="font-semibold block hover:text-blue-600">
             Team
           </Link>
 
           {user?.teamRole === 'admin' && (
-            <Link href="/dashboard/admin" className="block hover:text-blue-600">
+            <Link href="/dashboard/admin" className="font-semibold block hover:text-blue-600">
               Admin Panel
             </Link>
           )}

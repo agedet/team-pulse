@@ -1,8 +1,9 @@
 'use client';
+
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Button } from './ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 import axios from 'axios';
 
 export default function StatusForm() {
@@ -12,10 +13,12 @@ export default function StatusForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const API_URL = process.env.BASE_URL || 'http://localhost:5000';
+
     try {
         setIsUpdating(true);
 
-        const res = await axios.post('/api/status');
+        const res = await axios.post(`${API_URL}/status`);
         const data = res.data;
 
         setStatus(data.status);

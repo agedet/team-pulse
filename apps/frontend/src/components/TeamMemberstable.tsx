@@ -16,14 +16,16 @@ interface TeamMember {
 export function TeamMembersTable({ teamId }: { teamId: string }) {
   const [members, setMembers] = useState<TeamMember[]>([]);
 
+  const API_URL = process.env.BASE_URL || 'http://localhost:5000';
+
   useEffect(() => {
     const fetchMembers = async () => {
-      const res = await axios.get(`http://localhost:5000/admin/team/${teamId}/members`);
+      const res = await axios.get(`${API_URL}/admin/team/${teamId}/members`);
       setMembers(res.data);
     };
 
     fetchMembers();
-  }, [teamId]);
+  }, [API_URL, teamId]);
 
   return (
     <div className="mt-6">

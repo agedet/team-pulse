@@ -19,19 +19,25 @@ export default function AdminPage() {
   }
 
   return (
-    <div>
-      <div className="bg-white shadow p-4 rounded space-y-4">
-        <div>
-          <CreateTeamForm />
+    <main>
+      <div className="flex flex-col gap-6">
+        <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-4'>
+          {/* Create Team Form */}
+          <div>
+            <CreateTeamForm />
+          </div>
+
+          {/* Invite user Form */}
+          <div>
+            <InviteUserForm />
+          </div>
         </div>
 
-        <div>
-          <InviteUserForm />
-        </div>
+        {/* Teams Table */}
         {/* <div>
           <TeamMembersTable />
         </div> */}
       </div>
-    </div>
+    </main>
   );
 }

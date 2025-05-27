@@ -3,3 +3,8 @@
 2025-05-27T09:00:28.127084Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
 2025-05-27T11:12:30.990127Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
 2025-05-27T11:12:31.153145Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2025-05-27T17:45:52.002534Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2025-05-27T17:45:52.191538Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2025-05-27T21:08:22.425600Z  WARN turborepo_filewatch: failed to wait for initial filesystem cookie: filewatching failed to start: failed to write cookie to C:\Users\CELESTINA\Downloads\enbros projects\teampulse-app\.turbo\cookies\.turbo-cookie: failed to create file `C:\Users\CELESTINA\Downloads\enbros projects\teampulse-app\.turbo\cookies\.turbo-cookie`
+2025-05-27T21:08:23.740291Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2025-05-27T21:08:24.265992Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running

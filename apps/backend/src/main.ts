@@ -8,7 +8,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   app.enableCors({
-    origin: configService.get<string>('FRONTEND_URL') || 'https://team-pulse-api.vercel.app',
+    origin: configService.get<string>('FRONTEND_URL') || 'https://team-pulse-zeta.vercel.app',
     methods: ['GET', 'HEAD', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Accept', 'Authorization', 'x-csrf-token'],
     credential: true,

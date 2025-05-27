@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
 import { TeamsModule } from './team/team.module';
@@ -13,7 +12,7 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true 
     }), 
     UserModule, AdminModule, TeamsModule, SupabaseModule, AuthModule],
-  controllers: [UserController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}

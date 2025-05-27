@@ -5,7 +5,7 @@ import { RolesGuard } from 'src/auth/roles.guard';
 import { TeamRoles } from 'src/auth/roles.decorator';
 import { InviteUserDto } from './dto/invite-user.dto';
 
-@Controller('users')
+@Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 

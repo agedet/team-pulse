@@ -1,0 +1,5 @@
+2025-05-27T09:00:27.803196Z  WARN turborepo_filewatch: failed to remove cookie file failed to remove file `C:\Users\CELESTINA\Downloads\enbros projects\teampulse-app\.turbo\cookies\.turbo-cookie`
+2025-05-27T09:00:28.101782Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2025-05-27T09:00:28.127084Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2025-05-27T11:12:30.990127Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running
+2025-05-27T11:12:31.153145Z  WARN daemon_server: turborepo_lib::commands::daemon: daemon already running

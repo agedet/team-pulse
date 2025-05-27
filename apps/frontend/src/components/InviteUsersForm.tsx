@@ -14,7 +14,7 @@ export function InviteUserForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const API_URL = process.env.BASE_URL || 'http://localhost:5000';
+    const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
   
     const handleInvite = async (e: React.FormEvent) => {
         e.preventDefault();

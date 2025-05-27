@@ -14,14 +14,14 @@ export default function StatusForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const API_URL = process.env.BASE_URL || 'http://localhost:5000';
+    
+    const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
     setLoading(true);
     setError('');
 
     try {
-        const res = await axios.post(`${API_URL}/status`);
+        const res = await axios.post(`${API_URL}/team/status`);
         const data = res.data;
 
         setStatus(data.status);

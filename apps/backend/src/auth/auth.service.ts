@@ -89,7 +89,7 @@ export class AuthService {
 
     return {
       message: 'Verification successful',
-      session: data.session,
+      session: data.session?.access_token,
       user: {
         id: userId,
         email: profile.email,

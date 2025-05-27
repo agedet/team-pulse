@@ -5,6 +5,7 @@ import axios from "axios";
 
 interface TeamMember {
   email: string;
+  team: string;
   teamRole: string;
   statuses: {
     status: string;
@@ -16,7 +17,7 @@ interface TeamMember {
 export function TeamMembersTable({ teamId }: { teamId: string }) {
   const [members, setMembers] = useState<TeamMember[]>([]);
 
-  const API_URL = process.env.BASE_URL || 'http://localhost:5000';
+   const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -34,6 +35,7 @@ export function TeamMembersTable({ teamId }: { teamId: string }) {
         <thead>
           <tr>
             <th className="border p-2">Email</th>
+            <th className="border p-2">Team</th>
             <th className="border p-2">Role</th>
             <th className="border p-2">Status</th>
             <th className="border p-2">Project</th>
@@ -41,13 +43,14 @@ export function TeamMembersTable({ teamId }: { teamId: string }) {
           </tr>
         </thead>
         <tbody>
-          {members.map((m, index) => (
+          {members.map((member, index) => (
             <tr key={index}>
-              <td className="border p-2">{m.email}</td>
-              <td className="border p-2">{m.teamRole}</td>
-              <td className="border p-2">{m.statuses?.[0]?.status || '-'}</td>
-              <td className="border p-2">{m.statuses?.[0]?.project || '-'}</td>
-              <td className="border p-2">{m.statuses?.[0]?.updated_at || '-'}</td>
+              <td className="border p-2">{member.email}</td>
+              <td className="border p-2">{member.team}</td>
+              <td className="border p-2">{member.teamRole}</td>
+              <td className="border p-2">{member.statuses?.[0]?.status || '-'}</td>
+              <td className="border p-2">{member.statuses?.[0]?.project || '-'}</td>
+              <td className="border p-2">{member.statuses?.[0]?.updated_at || '-'}</td>
             </tr>
           ))}
         </tbody>

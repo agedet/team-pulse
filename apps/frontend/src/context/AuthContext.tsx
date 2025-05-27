@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
-    const API_URL = process.env.BASE_URL || 'http://localhost:5000';
+    const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
     // Check for existing session on mount
     useEffect(() => {
@@ -59,6 +59,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
     const login = async (email: string, password: string) => {
+        const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
         try {
             setIsLoading(true);
         
@@ -90,6 +92,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const register = async (fullName: string, email: string, password: string) => {
+        const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
         try {
             setIsLoading(true);
             
@@ -111,6 +115,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const verify = async (email: string, otp: string) => {
+        const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
         try {
             setIsLoading(true);
             

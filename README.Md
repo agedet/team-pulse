@@ -9,7 +9,7 @@ TeamPulse is a lightweight internal web app designed to help companies manage te
 
 ## Tech Stack
 
-* **Frontend**: Next.js, Tailwind CSS, Sonner (for toasts)
+* **Frontend**: Next.js, Tailwind CSS, axios, Sonner (for toasts)
 * **Backend**: NestJS (REST API)
 * **Auth & Database**: Supabase (email/password auth, PostgreSQL)
 
@@ -20,7 +20,7 @@ TeamPulse is a lightweight internal web app designed to help companies manage te
 ### Prerequisites
 
 * Node.js (v18 or later)
-* Supabase project with `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
+* Supabase project with `SUPABASE_URL` and `SUPABASE_SERVICE_ANON_KEY`
 
 ---
 
@@ -49,21 +49,23 @@ team-pulse/
 2. Create a `.env` file:
 
    ```env
-   SUPABASE_URL=your_supabase_url
-   SUPABASE_SERVICE_ROLE_KEY=your_service_anon_key
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_service_anon_key
+   JWT_SECRET=your_jwt_secret
    FRONTEND_URL=http://localhost:3000
+   PORT=5000
    ```
 
 3. Install dependencies:
 
    ```bash
-   npm install
+   $ npm install
    ```
 
 4. Start the server:
 
    ```bash
-   npm run start:dev
+   $ npm run dev
    ```
 
 Backend runs on `http://localhost:5000`
@@ -84,7 +86,10 @@ Backend runs on `http://localhost:5000`
    npm install
    ```
 
-3. Create a `.env.local` (if needed for Supabase public access or API keys):
+3. Create a `.env.local`:
+   ```env
+   NEXT_PUBLIC_BASE_URL=http://localhost:5000
+   ```
 
 4. Start the frontend:
 
@@ -116,7 +121,5 @@ Frontend runs on `http://localhost:3000`
   * View own team updates
 
 ---
-
-## 📄 License
 
 

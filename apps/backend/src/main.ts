@@ -10,7 +10,7 @@ async function bootstrap() {
   app.enableCors({
     origin: configService.get<string>('FRONTEND_URL') || 'https://team-pulse-zeta.vercel.app',
     methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Accept', 'Authorization', 'x-csrf-token'],
+    allowedHeaders: ['Origin', 'Content-Type', 'Accept', 'Authorization', 'x-csrf-token'],
     credentials: true,
     preflightContinue: false,
     optionsSuccessStatuses: 204,

@@ -11,7 +11,7 @@ async function bootstrap() {
     origin: configService.get<string>('FRONTEND_URL') || 'https://team-pulse-zeta.vercel.app',
     methods: ['GET', 'HEAD', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Accept', 'Authorization', 'x-csrf-token'],
-    credential: true,
+    credentials: true,
     preflightContinue: false,
     optionsSuccessStatuses: 204,
   });

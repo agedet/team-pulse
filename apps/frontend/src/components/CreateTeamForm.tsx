@@ -34,7 +34,7 @@ export function CreateTeamForm() {
       } else {
         setError('Failed to create team. Please try again');
       }
-      
+
       toast.error("Failed to create team");
     } finally {
       setLoading(false);
@@ -44,7 +44,7 @@ export function CreateTeamForm() {
   return (
     <div className="p-4 rounded mb-4">
       <form onSubmit={handleCreate}>
-        <Card className="w-full max-w-md border-slate-200 shadow-lg">
+        <Card className="w-full max-w-md border-slate-200 ">
           <CardHeader className='space-y-1'>
             <CardTitle className="text-lg font-semibold mb-2">Create Team</CardTitle>
           
@@ -56,13 +56,13 @@ export function CreateTeamForm() {
             }
           </CardHeader>
           <CardContent>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center gap-2">
               <div className="grid gap-2">
                 <Input
                   value={teamName}
                   onChange={(e) => setTeamName(e.target.value)}
                   placeholder="Team Name"
-                  className="w-full border px-3 py-1"
+                  className="w-full border px-3 py-2"
                 />
               </div>
 

@@ -43,9 +43,9 @@ export default function StatusForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-2">  
-        <Card className="w-full max-w-md border-slate-200 shadow-lg">
-            <CardHeader className='space-y-1'>
-                <CardTitle className="text-lg font-semibold mb-2">Status</CardTitle>
+        <Card className="w-full rounded-lg  border-slate-200 space-y-0">
+            <CardHeader>
+                <CardTitle className="text-lg font-semibold">Status Update</CardTitle>
             
                 {/* Error Message */}
                 {error && 
@@ -54,31 +54,35 @@ export default function StatusForm() {
                     </p>
                 }
             </CardHeader>
-          <CardContent>
-                <Select
-                    value={status}
-                    name='status'
-                    onValueChange={setStatus}
-                >
-                    <SelectTrigger 
-                        className="w-full border border-gray-300 rounded px-3 py-2"
-                    >
-                        <SelectValue placeholder="set availability" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="onleave">On Leave</SelectItem>
-                        <SelectItem value="working">Working</SelectItem>
-                        <SelectItem value="blocked">Blocked</SelectItem>
-                    </SelectContent>
-                </Select>
+            <CardContent>
+                <div className="flex justify-between items-center gap-2">
+                    <div className="flex gap-2">
+                        <Select
+                            value={status}
+                            name='status'
+                            onValueChange={setStatus}
+                        >
+                            <SelectTrigger 
+                                className="w-full border border-gray-300 rounded px-3 py-2"
+                            >
+                                <SelectValue placeholder="set availability" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="onleave">On Leave</SelectItem>
+                                <SelectItem value="working">Working</SelectItem>
+                                <SelectItem value="blocked">Blocked</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
 
-                <Button 
-                    type="submit" 
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-blue-500"
-                    disabled={loading || !status}
-                >
-                    {loading ? "Updating Status..." : "Update status"}
-                </Button>
+                    <Button 
+                        type="submit" 
+                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-blue-500"
+                        disabled={loading || !status}
+                    >
+                        {loading ? "Updating..." : "Update"}
+                    </Button>
+                </div>
             </CardContent>
         </Card>
     </form>

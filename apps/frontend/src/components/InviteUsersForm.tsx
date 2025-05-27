@@ -57,7 +57,7 @@ export function InviteUserForm() {
                 }
                 </CardHeader>
                 <CardContent>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center gap-2">
                         <div className="flex gap-2">
                             <Input
                                 value={email}

@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { SupabaseService } from 'src/supabase/supabase.service';
 import { UpdateMemberStatusDto } from './dto/update-status.dto';
@@ -80,5 +80,28 @@ export class TeamsService {
         return {
             message: 'Status updated successfully'
         }
+    }
+
+    async getTeamMembers(userId: string) {
+        const { data: profile, error: profileError } = await this.supabase.client
+        .from('profiles')
+        .select('teamId')
+        .eq('id', userId)
+        .single();
+
+        if (profileError || !profile?.teamId) {
+            throw new NotFoundException('Team not found');
+        }
+
+        const { data: members, error } = await this.supabase.client
+        .from('profiles')
+        .select('id, fullName, email, status, teamRole')
+        .eq('teamId', profile.teamId);
+
+        if (error) {
+            throw new InternalServerErrorException('Could not fetch team members');
+        }
+
+        return members;
     }
 }

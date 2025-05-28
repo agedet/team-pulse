@@ -1,7 +1,7 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { TeamsService } from './team.service';
-import { RolesGuard } from 'src/auth/roles.guard';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { TeamRoles } from 'src/auth/roles.decorator';
 import { UpdateMemberStatusDto } from './dto/update-status.dto';
@@ -18,11 +18,15 @@ export class TeamsController {
     }
 
     @Post('status')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @TeamRoles('member')
     async updateStatus(@Body() updateMemberStatusDto: UpdateMemberStatusDto, @Req() req: any) {
         const userId = req.user.id;
         return await this.teamsService.updateMemberStatus(userId, updateMemberStatusDto);
+    }
+
+    @Get('members')
+    async getTeamMembers(@Req() req: any) {
+        const userId = req.user.id;
+        return this.teamsService.getTeamMembers(userId)
     }
 
 }

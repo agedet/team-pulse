@@ -22,6 +22,7 @@ interface AuthContextType {
   register: (fullName: string, email: string, password: string) => Promise<void>;
   verify: (email: string, otp: string) => Promise<void>;
   logout: () => Promise<void>;
+  token: string | null;
 }
 
 export const AuthContext = createContext<AuthContextType> ({
@@ -31,31 +32,27 @@ export const AuthContext = createContext<AuthContextType> ({
     register: async () => {},
     verify: async () => {},
     logout: async () => {},
+    token: null,
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [token, setToken] = useState(null);
     const router = useRouter();
-
-    const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
     // Check for existing session on mount
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const storedToken = localStorage.getItem("token");
+        const storedUser = localStorage.getItem("user");
 
-        if (!token) {
-            setIsLoading(false);
-            return;
+        if (storedToken && storedUser) {
+            setToken(storedToken as any);
+            setUser(JSON.parse(storedUser));
         }
 
-        axios.get(`${API_URL}/auth/me`, {
-            headers: {Authorization: `Bearer ${token}`},
-        })
-        .then((res) => setUser(res.data))
-        .catch(() => logout())
-        .finally(() => setIsLoading(false));
-    }, [API_URL]);
+        setIsLoading(false);
+    }, []);
 
 
     const login = async (email: string, password: string) => {
@@ -71,7 +68,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             const { token, user } = res.data;
 
             localStorage.setItem('token', token);
+            localStorage.setItem('user',JSON.stringify(user));
+            setToken(token)
             setUser(user);
+            
+            toast.success("Login successful");
 
             if (res.data.user.teamRole === 'admin') {
                 router.push('/dashboard/admin');
@@ -81,7 +82,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 router.push('/unauthorized');
             }
 
-            toast.success("Login successful");
+            
         } catch (error) {
             console.error("Login error:", error);
             toast.error("Login failed. Please check your credentials.");
@@ -103,6 +104,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 fullName,
                 teamRole: 'member'
             });
+
+            toast.success("Registration successful! Check your email for a verification code.");
 
             router.push('/verify?email=' + email);
         } catch (error) {
@@ -128,6 +131,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             const { token, user } = res.data;
 
             localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user))
+            setToken(token);
             setUser(user);
 
             if (res.data.user.teamRole === 'admin') {
@@ -153,6 +158,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setIsLoading(true);
         
             localStorage.removeItem("token");
+            localStorage.removeItem("user")
+            setToken(null);
             setUser(null);
 
             router.push("/login");
@@ -167,7 +174,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }, [router]);
 
     return (
-        <AuthContext.Provider value={{ user, isLoading, login, register, verify, logout}}>
+        <AuthContext.Provider value={{ user, isLoading, login, register, verify, logout, token}}>
             {children}
         </AuthContext.Provider>
     )

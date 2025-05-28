@@ -4,11 +4,16 @@ import { LoginUserDto } from './dto/login.dto';
 import { RegisterUserDto } from './dto/register.dto';
 import { SupabaseService } from 'src/supabase/supabase.service';
 import { VerifyUserDto } from './dto/verify.dto';
-// import { supabase } from 'src/supabase/supabase';
 
 @Injectable()
 export class AuthService {
   constructor(private readonly supabase: SupabaseService) {}
+
+  private generateJwt(payload: any) {
+    return jwt.sign(payload, process.env.JWT_SECRET as string, {
+      expiresIn: '7d',
+    });
+  }
 
   verifyToken(token: string) {
     try {
@@ -87,9 +92,15 @@ export class AuthService {
       throw new InternalServerErrorException('Could not fetch user profile');
     }
 
+    const token = this.generateJwt({
+      id: userId,
+      email: profile.email,
+      teamRole: profile.teamRole,
+    });
+
     return {
       message: 'Verification successful',
-      session: data.session?.access_token,
+      token,
       user: {
         id: userId,
         email: profile.email,
@@ -124,9 +135,15 @@ export class AuthService {
       throw new InternalServerErrorException('Could not fetch user profile');
     }
 
+    const token = this.generateJwt({
+      id: userId,
+      email: data.user.email,
+      teamRole: profile.teamRole,
+    });
+
     return {
       message: 'Login successful',
-      session: data.session,
+      token,
       user: {
         id: userId,
         email: data.user.email,

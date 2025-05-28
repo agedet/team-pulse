@@ -6,14 +6,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function StatusForm() {
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const { token, user } = useAuth();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!status) {
+      toast.error('Please select a status');
+      return;
+    }
     
     const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -21,10 +29,14 @@ export default function StatusForm() {
     setError('');
 
     try {
-        const res = await axios.post(`${API_URL}/team/status`);
-        const data = res.data;
-
-        setStatus(data.status);
+        await axios.post(`${API_URL}/team/status`, 
+            {status},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            }
+        );
 
         toast.success('Status updated successfully');
     } catch (err) {
@@ -43,8 +55,8 @@ export default function StatusForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-2">  
-        <Card className="w-full rounded-lg  border-slate-200 space-y-0">
-            <CardHeader>
+        <Card className="w-full shadow-none py-0 px-0 rounded-none bg-transparent border-0 space-y-0">
+            <CardHeader className='py-0 px-0'>
                 <CardTitle className="text-lg font-semibold">Status Update</CardTitle>
             
                 {/* Error Message */}
@@ -54,7 +66,7 @@ export default function StatusForm() {
                     </p>
                 }
             </CardHeader>
-            <CardContent>
+            <CardContent className='px-0'>
                 <div className="flex justify-between items-center gap-2">
                     <div className="flex gap-2">
                         <Select

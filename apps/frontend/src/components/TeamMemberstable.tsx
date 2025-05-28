@@ -10,18 +10,18 @@ interface TeamMember {
   statuses: {
     status: string;
     project: string;
-    updated_at: string;
+    updatedAt: string;
   }[];
 }
 
 export function TeamMembersTable({ teamId }: { teamId: string }) {
   const [members, setMembers] = useState<TeamMember[]>([]);
 
-   const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
+  const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   useEffect(() => {
     const fetchMembers = async () => {
-      const res = await axios.get(`${API_URL}/admin/team/${teamId}/members`);
+      const res = await axios.get(`${API_URL}/admin/team/${teamId}`);
       setMembers(res.data);
     };
 
@@ -50,7 +50,7 @@ export function TeamMembersTable({ teamId }: { teamId: string }) {
               <td className="border p-2">{member.teamRole}</td>
               <td className="border p-2">{member.statuses?.[0]?.status || '-'}</td>
               <td className="border p-2">{member.statuses?.[0]?.project || '-'}</td>
-              <td className="border p-2">{member.statuses?.[0]?.updated_at || '-'}</td>
+              <td className="border p-2">{member.statuses?.[0]?.updatedAt || '-'}</td>
             </tr>
           ))}
         </tbody>

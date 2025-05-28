@@ -20,7 +20,7 @@ export default function TeamList() {
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const res = await axios.get(`${API_URL}/team/statuses`);
+        const res = await axios.get(`${API_URL}/team/`);
         setMembers(res.data);
       } catch (error) {
         console.error("Failed to load team members:", error);

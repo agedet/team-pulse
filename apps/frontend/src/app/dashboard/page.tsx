@@ -18,15 +18,20 @@ export default function DashboardPage() {
 
   return (
     <main>
-      <div className='flex flex-col gap-4 items-start justify-between md:flex-row md:items-center'>
-        <div>
-          <h2 className="text-xl font-semibold">
-            Hello, {' '} 
+      <div className='flex flex-col gap-6 items-start justify-between md:flex-row md:items-center'>
+        <div className='grid gap-2'>
+          <h2 className="text-lg font-semibold">
+            Hello, {' '}
+          </h2>
+
+          <h2 className="text-lg font-semibold">
             {user.fullName || user.email}
           </h2>
         </div>
-
-        <StatusForm />
+        
+        <div>
+          <StatusForm />
+        </div>
       </div>
 
       {/* current task */}

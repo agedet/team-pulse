@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { TeamRoles } from 'src/auth/roles.decorator';
-import { RolesGuard } from 'src/auth/roles.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { AdminService } from './admin.service';
 import { CreateTeamDto } from 'src/team/dto/create-team.dto';
 import { InviteUserDto } from 'src/user/dto/invite-user.dto';
